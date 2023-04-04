@@ -5,8 +5,9 @@ import { PrismaModule } from 'src/prisma/prisma.module';
 import { EmailValidator } from './validator/email.validator';
 
 @Module({
+  imports: [PrismaModule],
   controllers: [UsersController],
   providers: [UsersService, EmailValidator],
-  imports: [PrismaModule],
+  exports: [UsersService],
 })
 export class UsersModule {}

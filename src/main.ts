@@ -24,6 +24,7 @@ async function bootstrap() {
     .setDescription('Collection API')
     .setVersion('1.0')
     .addTag('Collection')
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
