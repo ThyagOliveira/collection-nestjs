@@ -7,6 +7,7 @@ import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { AuthEntity } from './entity/auth.entity';
 import * as bcrypt from 'bcrypt';
+import { UserEntity } from 'src/users/entities/user.entity';
 
 @Injectable()
 export class AuthService {
@@ -28,5 +29,17 @@ export class AuthService {
     return {
       accessToken: this.jwtService.sign({ userId: user.id }),
     };
+  }
+
+  async validateToken(token: string): Promise<UserEntity | any> {
+    try {
+      const payload = await this.jwtService.verifyAsync(token);
+
+      const user = { id: payload.userId };
+
+      return user;
+    } catch (error) {
+      throw new UnauthorizedException('Invalid Token');
+    }
   }
 }
