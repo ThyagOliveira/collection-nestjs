@@ -15,6 +15,7 @@ async function main() {
       name: 'Thyago',
       email: 'thyago@email.com',
       password: password,
+      type: 'ADMIN',
     },
   });
 
@@ -22,15 +23,29 @@ async function main() {
     where: { id: '1ef7a68c-8907-4101-a2e1-c40257e668cc' },
     update: {},
     create: {
-      title: 'Component test',
-      category: 'Component category',
-      description: 'Component description',
+      id: '1ef7a68c-8907-4101-a2e1-c40257e668cc',
+      title: 'Metal Dourado',
+      category: 'Metal',
+      description: 'Metal de superfície natural',
       urlThumbnail: 'http://thumbnail.com',
       price: 30.99,
     },
   });
 
-  console.log({ user, component });
+  const otherComponent = await prisma.component.upsert({
+    where: { id: '0e782160-c96e-46ea-a797-70578d429202' },
+    update: {},
+    create: {
+      id: '0e782160-c96e-46ea-a797-70578d429202',
+      title: 'Carvalho',
+      category: 'Tijolo',
+      description: 'Metal de superfície acetinado',
+      urlThumbnail: 'http://thumbnail.com',
+      price: 15.99,
+    },
+  });
+
+  console.log({ user, component, otherComponent });
 }
 
 main()

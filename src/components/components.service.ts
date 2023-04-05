@@ -8,26 +8,40 @@ import { Component } from '@prisma/client';
 export class ComponentsService {
   constructor(private prisma: PrismaService) {}
 
-  create(createComponentDto: CreateComponentDto): Promise<Component> {
+  async create(createComponentDto: CreateComponentDto): Promise<Component> {
     return this.prisma.component.create({ data: createComponentDto });
   }
 
-  findAll() {
+  async findAll(): Promise<Component[]> {
     return this.prisma.component.findMany();
   }
 
-  findOne(id: string) {
+  async findByCategory(category: string): Promise<Component[]> {
+    return this.prisma.component.findMany({
+      where: {
+        category: {
+          contains: category,
+          mode: 'insensitive',
+        },
+      },
+    });
+  }
+
+  async findOne(id: string): Promise<Component | null> {
     return this.prisma.component.findUnique({ where: { id } });
   }
 
-  update(id: string, updateComponentDto: UpdateComponentDto) {
+  async update(
+    id: string,
+    updateComponentDto: UpdateComponentDto,
+  ): Promise<Component> {
     return this.prisma.component.update({
       where: { id },
       data: updateComponentDto,
     });
   }
 
-  remove(id: string) {
+  async remove(id: string): Promise<Component> {
     return this.prisma.component.delete({ where: { id } });
   }
 }
