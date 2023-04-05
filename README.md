@@ -50,7 +50,7 @@ http://localhost:3000/api
 ```
 
 
-Para acessar a instancia do pgadmin
+Para acessar a instância do pgadmin
 ```
 http://localhost:8080
 ```
